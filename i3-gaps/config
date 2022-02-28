@@ -9,11 +9,25 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# DOCTOR'S MESSAGE:
+#
+# Be sure to follow the official i3 documentation. I intend to use this for
+# Any form of Arch/Artix Linux Build. Be Sure to have ttf-font-awesome downloaded.
+# I also recommending download YAY (Yet Another Yaourt) and installing bumblebee-status
+# from YAY. I have alacritty and picom installed as well.
+#
+# Feel free to use this and substitute what you wnat, this is licensed under MIT so
+# You may make whatever edits as you want without giving me any form of credit.
+#
+# I WILL NOT HELP YOU IF YOU MAY ERRORS WITH YOUR i3 CONFIG, THIS IS ON YOU.
+# IF YOU ARE DEPLOYING THIS CONFIG I WISH YOU THE BEST OF LUCK, AS SOMETIMES
+# DEPLOYING CONFIGS MAY BE A HEADACHE IN ITSELF WHEN GOING MACHINE-TO-MACHINE.
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 13;fonts-font-awesome 13 
+font pango:monospace 13 ; font pango:ttf-font-awesome 
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -41,7 +55,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -106,7 +120,7 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 ""
+set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
@@ -177,12 +191,21 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
+
+# DOCTOR'S NOTE ABOUT BUMBLEBEE-STATUS
+# 
+# Bumblebee-status may be a little confusing if you're deploying it. It can be compiled
+# or you can use python3-pip. You'll have to point it in the direction that it's installed
+# Into.
+#
+# BE SURE TO CHECK THE BUMBLEBEE-STATUS DOCUMENTATION!
+
 bar {
-	 status_command ~/.local/bin/bumblebee-status -m memory datetime \
+	 status_command /usr/bin/bumblebee-status -m memory datetime \
 	 pasink pasource -p time.format="%H:%M" -t gruvbox
 	 position top
 }
 
 # applications on startup
-exec picom --config --backend xr_glx_hybrid 
-exec nitrogen --restore
+exec_always picom &
+exec_always nitrogen --restore &
